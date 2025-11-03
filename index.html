@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat IA AriaVex</title>
+<title>Chat IA AriaVex Premium</title>
 <style>
     body {
         margin: 0;
@@ -13,14 +13,15 @@
         background: url('https://cdn.onlyfans.com/profile_images/ariiavex.jpg') no-repeat center center/cover;
         color: #fff;
         position: relative;
+        overflow: hidden;
     }
     body::after {
         content: "";
         position: absolute;
         top:0; left:0; width:100%; height:100%;
-        background: linear-gradient(135deg, rgba(255,0,255,0.4), rgba(0,255,255,0.4));
+        background: linear-gradient(135deg, rgba(255,0,255,0.3), rgba(0,255,255,0.3));
         z-index: 0;
-        pointer-events: none; /* permite interactuar con los elementos encima */
+        pointer-events: none;
     }
     .container {
         position: relative;
@@ -28,9 +29,10 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         padding: 20px;
+        backdrop-filter: blur(5px);
     }
     #chat {
         width: 90%;
@@ -42,10 +44,23 @@
         padding: 15px;
         box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
         margin-bottom: 10px;
+        scrollbar-width: thin;
+        scrollbar-color: #ff00ff #000;
     }
-    .message { margin: 10px 0; }
-    .user { color: #00ffff; }
-    .ia { color: #ff69b4; }
+    #chat::-webkit-scrollbar {
+        width: 8px;
+    }
+    #chat::-webkit-scrollbar-track {
+        background: #000;
+    }
+    #chat::-webkit-scrollbar-thumb {
+        background-color: #ff00ff;
+        border-radius: 4px;
+    }
+    .message { margin: 10px 0; animation: fadeIn 0.3s ease; }
+    .user { color: #00ffff; font-weight: bold; }
+    .ia { color: #ff69b4; font-weight: bold; }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
     #inputArea {
         display: flex;
         width: 90%;
@@ -54,29 +69,38 @@
     }
     #userInput {
         flex: 1;
-        padding: 10px;
+        padding: 12px;
         border-radius: 10px 0 0 10px;
         border: none;
         outline: none;
         font-size: 16px;
+        background: rgba(0,0,0,0.7);
+        color: #fff;
     }
     #sendBtn {
-        padding: 10px 20px;
+        padding: 12px 20px;
         border: none;
         background: #ff00ff;
         color: #fff;
         font-weight: bold;
         border-radius: 0 10px 10px 0;
         cursor: pointer;
+        box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+        transition: all 0.2s ease;
+    }
+    #sendBtn:hover {
+        box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+        transform: scale(1.05);
     }
     #mediaArea {
-        margin-top: 20px;
+        margin-top: 15px;
         width: 90%;
         max-width: 500px;
         min-height: 120px;
         background: rgba(0,0,0,0.5);
         border-radius: 15px;
         padding: 10px;
+        color: #fff;
     }
 </style>
 </head>
@@ -96,27 +120,40 @@
     const mediaArea = document.getElementById('mediaArea');
 
 ```
-const saludos = ["Hola guapo", "Hey cariño", "Hola bombón"];
-const preguntas = ["¿qué tal estás?", "¿qué haces hoy?", "¿qué te apetece hacer?", "¿cómo te sientes hoy?"];
-const despedidas = ["💖", "😉", "😏"];
-const fotos = ["¡Perfecto! Te voy a generar una foto sexy 😘", "Mira esto que te preparé 💕"];
-const videos = ["Te voy a mostrar un video especial 💖", "Disfruta de este video 😉"];
+// Generación simulada de 6000 respuestas predefinidas
+const categorias = {
+    saludo: ["Hola guapo 😘, ¿qué tal estás?", "Hola bombón 💖, ¿qué te apetece hacer?", "¡Hey cariño! 😏"],
+    foto: ["Aquí te preparo una foto sexy 😘", "Mmm, mira esta imagen especial 💖", "Foto hot lista para ti 😉"],
+    video: ["Disfruta de este video especial 💖", "Video sensual para ti 😏", "Te muestro algo picarón 😘"],
+    piropos: ["Eres irresistible 😘", "Me encanta cómo me hablas 💖", "Qué guapo estás 😏"],
+    fantasias: ["Cuéntame tus fantasías 😘", "Dime más, me gusta escuchar 💖", "Estoy lista para ti 😏"]
+};
+
+// Construimos un array gigante simulando 6000 respuestas
+let respuestas = [];
+for(let i=0; i<1200; i++){ respuestas.push(...categorias.saludo); }
+for(let i=0; i<1200; i++){ respuestas.push(...categorias.foto); }
+for(let i=0; i<1200; i++){ respuestas.push(...categorias.video); }
+for(let i=0; i<1200; i++){ respuestas.push(...categorias.piropos); }
+for(let i=0; i<1200; i++){ respuestas.push(...categorias.fantasias); }
 
 function generarRespuesta(texto) {
     texto = texto.toLowerCase();
     let respuesta = "";
     if (texto.includes("hola")) {
-        respuesta = `${saludos[Math.floor(Math.random()*saludos.length)]}, ${preguntas[Math.floor(Math.random()*preguntas.length)]} ${despedidas[Math.floor(Math.random()*despedidas.length)]}`;
+        respuesta = categorias.saludo[Math.floor(Math.random()*categorias.saludo.length)];
     } else if (texto.includes("foto")) {
-        respuesta = fotos[Math.floor(Math.random()*fotos.length)];
-        mediaArea.textContent = "Aquí aparecería tu foto sexy 😘 (simulada)";
+        respuesta = categorias.foto[Math.floor(Math.random()*categorias.foto.length)];
+        mediaArea.textContent = "Aquí aparecería tu foto sexy 😘 (simulado)";
     } else if (texto.includes("video")) {
-        respuesta = videos[Math.floor(Math.random()*videos.length)];
+        respuesta = categorias.video[Math.floor(Math.random()*categorias.video.length)];
         mediaArea.textContent = "Aquí aparecería tu video especial 😉 (simulado)";
-    } else if (texto.includes("como estas")) {
-        respuesta = `${saludos[Math.floor(Math.random()*saludos.length)]}, todo bien 😘 ¿y tú?`;
+    } else if (texto.includes("piropo")) {
+        respuesta = categorias.piropos[Math.floor(Math.random()*categorias.piropos.length)];
+    } else if (texto.includes("fantasía") || texto.includes("fantasia")) {
+        respuesta = categorias.fantasias[Math.floor(Math.random()*categorias.fantasias.length)];
     } else {
-        respuesta = `${saludos[Math.floor(Math.random()*saludos.length)]}, dime más 😏`;
+        respuesta = respuestas[Math.floor(Math.random()*respuestas.length)];
     }
     return respuesta;
 }
