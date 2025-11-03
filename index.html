@@ -4,183 +4,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat IA AriaVex Premium</title>
+<title>Chat IA Sensual</title>
 <style>
     body {
         margin: 0;
         font-family: 'Arial', sans-serif;
-        height: 100vh;
-        background: url('https://cdn.onlyfans.com/profile_images/ariiavex.jpg') no-repeat center center/cover;
+        background: url('https://onlyfans.com/ariiavex') no-repeat center center fixed;
+        background-size: cover;
         color: #fff;
-        position: relative;
-        overflow: hidden;
     }
-    body::after {
-        content: "";
-        position: absolute;
-        top:0; left:0; width:100%; height:100%;
-        background: linear-gradient(135deg, rgba(255,0,255,0.3), rgba(0,255,255,0.3));
-        z-index: 0;
-        pointer-events: none;
-    }
-    .container {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        justify-content: flex-end;
-        align-items: center;
-        padding: 20px;
-        backdrop-filter: blur(5px);
-    }
-    #chat {
-        width: 90%;
-        max-width: 500px;
-        height: 400px;
+    .chat-container {
+        width: 400px;
+        max-width: 90%;
+        margin: 50px auto;
         background: rgba(0,0,0,0.6);
         border-radius: 15px;
-        overflow-y: auto;
-        padding: 15px;
+        padding: 20px;
         box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
-        margin-bottom: 10px;
-        scrollbar-width: thin;
-        scrollbar-color: #ff00ff #000;
     }
-    #chat::-webkit-scrollbar {
-        width: 8px;
+    #messages {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #fff;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(0,0,0,0.4);
     }
-    #chat::-webkit-scrollbar-track {
-        background: #000;
+    .message {
+        margin: 10px 0;
+        padding: 8px;
+        border-radius: 10px;
     }
-    #chat::-webkit-scrollbar-thumb {
-        background-color: #ff00ff;
-        border-radius: 4px;
-    }
-    .message { margin: 10px 0; animation: fadeIn 0.3s ease; }
-    .user { color: #00ffff; font-weight: bold; }
-    .ia { color: #ff69b4; font-weight: bold; }
-    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-    #inputArea {
-        display: flex;
-        width: 90%;
-        max-width: 500px;
-        z-index: 2;
-    }
-    #userInput {
-        flex: 1;
-        padding: 12px;
-        border-radius: 10px 0 0 10px;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        background: rgba(0,0,0,0.7);
-        color: #fff;
-    }
-    #sendBtn {
-        padding: 12px 20px;
-        border: none;
+    .user {
         background: #ff00ff;
         color: #fff;
-        font-weight: bold;
-        border-radius: 0 10px 10px 0;
-        cursor: pointer;
-        box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
-        transition: all 0.2s ease;
+        text-align: right;
     }
-    #sendBtn:hover {
-        box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
-        transform: scale(1.05);
+    .ia {
+        background: #00ffff;
+        color: #000;
+        text-align: left;
     }
-    #mediaArea {
-        margin-top: 15px;
-        width: 90%;
-        max-width: 500px;
-        min-height: 120px;
-        background: rgba(0,0,0,0.5);
-        border-radius: 15px;
+    input, button {
         padding: 10px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 10px;
+        width: calc(100% - 22px);
+        font-size: 16px;
+        outline: none;
+    }
+    button {
+        background: linear-gradient(45deg, #ff00ff, #00ffff);
         color: #fff;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    button:hover {
+        box-shadow: 0 0 10px #ff00ff, 0 0 10px #00ffff;
+    }
+    .ia-typing {
+        font-style: italic;
+        opacity: 0.7;
+    }
+    .media {
+        margin-top: 10px;
+        max-width: 100%;
+        border-radius: 10px;
     }
 </style>
 </head>
 <body>
-<div class="container">
-    <div id="chat"></div>
-    <div id="inputArea">
-        <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
-        <button id="sendBtn">Enviar</button>
-    </div>
-    <div id="mediaArea">Aquí aparecerán imágenes/videos generados...</div>
+<div class="chat-container">
+    <h2>Chat con AriaVex</h2>
+    <div id="messages"></div>
+    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
+    <button onclick="sendMessage()">Enviar</button>
 </div>
+
 <script>
-    const chat = document.getElementById('chat');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const mediaArea = document.getElementById('mediaArea');
+const messages = document.getElementById('messages');
+const userInput = document.getElementById('userInput');
 
-```
-// Generación simulada de 6000 respuestas predefinidas
-const categorias = {
-    saludo: ["Hola guapo 😘, ¿qué tal estás?", "Hola bombón 💖, ¿qué te apetece hacer?", "¡Hey cariño! 😏"],
-    foto: ["Aquí te preparo una foto sexy 😘", "Mmm, mira esta imagen especial 💖", "Foto hot lista para ti 😉"],
-    video: ["Disfruta de este video especial 💖", "Video sensual para ti 😏", "Te muestro algo picarón 😘"],
-    piropos: ["Eres irresistible 😘", "Me encanta cómo me hablas 💖", "Qué guapo estás 😏"],
-    fantasias: ["Cuéntame tus fantasías 😘", "Dime más, me gusta escuchar 💖", "Estoy lista para ti 😏"]
-};
+// Simulación de 6000 respuestas predefinidas (aquí resumido, expandir según necesites)
+const iaResponses = [
+    "Hola guapo 😘, ¿qué tal estás?",
+    "Me encanta que me hables así 💖",
+    "¿Quieres ver una foto especial? 😏",
+    "Eres muy travieso 😈",
+    "Cuéntame tus fantasías...",
+    "Mmm... eso suena muy bien 😘",
+    "Estoy lista para jugar contigo 😏",
+    "Eres irresistible 💕",
+    "Me encanta hablar contigo 😍",
+    "Dime algo atrevido 😈"
+    // Añadir más hasta 6000
+];
 
-// Construimos un array gigante simulando 6000 respuestas
-let respuestas = [];
-for(let i=0; i<1200; i++){ respuestas.push(...categorias.saludo); }
-for(let i=0; i<1200; i++){ respuestas.push(...categorias.foto); }
-for(let i=0; i<1200; i++){ respuestas.push(...categorias.video); }
-for(let i=0; i<1200; i++){ respuestas.push(...categorias.piropos); }
-for(let i=0; i<1200; i++){ respuestas.push(...categorias.fantasias); }
-
-function generarRespuesta(texto) {
-    texto = texto.toLowerCase();
-    let respuesta = "";
-    if (texto.includes("hola")) {
-        respuesta = categorias.saludo[Math.floor(Math.random()*categorias.saludo.length)];
-    } else if (texto.includes("foto")) {
-        respuesta = categorias.foto[Math.floor(Math.random()*categorias.foto.length)];
-        mediaArea.textContent = "Aquí aparecería tu foto sexy 😘 (simulado)";
-    } else if (texto.includes("video")) {
-        respuesta = categorias.video[Math.floor(Math.random()*categorias.video.length)];
-        mediaArea.textContent = "Aquí aparecería tu video especial 😉 (simulado)";
-    } else if (texto.includes("piropo")) {
-        respuesta = categorias.piropos[Math.floor(Math.random()*categorias.piropos.length)];
-    } else if (texto.includes("fantasía") || texto.includes("fantasia")) {
-        respuesta = categorias.fantasias[Math.floor(Math.random()*categorias.fantasias.length)];
-    } else {
-        respuesta = respuestas[Math.floor(Math.random()*respuestas.length)];
-    }
-    return respuesta;
-}
-
-function addMessage(text, sender) {
-    const div = document.createElement('div');
-    div.classList.add('message', sender);
-    div.textContent = text;
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
+function randomResponse() {
+    const index = Math.floor(Math.random() * iaResponses.length);
+    return iaResponses[index];
 }
 
 function sendMessage() {
-    const texto = userInput.value.trim();
-    if (texto === "") return;
-    addMessage(texto, 'user');
-    const respuesta = generarRespuesta(texto);
-    setTimeout(() => addMessage(respuesta, 'ia'), 500);
-    userInput.value = "";
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    // Mensaje del usuario
+    const userMsg = document.createElement('div');
+    userMsg.classList.add('message','user');
+    userMsg.textContent = text;
+    messages.appendChild(userMsg);
+    messages.scrollTop = messages.scrollHeight;
+    userInput.value = '';
+
+    // Mensaje de "IA escribiendo..."
+    const iaTyping = document.createElement('div');
+    iaTyping.classList.add('message','ia','ia-typing');
+    iaTyping.textContent = 'AriaVex está escribiendo...';
+    messages.appendChild(iaTyping);
+    messages.scrollTop = messages.scrollHeight;
+
+    // Respuesta de la IA simulada
+    setTimeout(() => {
+        messages.removeChild(iaTyping);
+
+        const iaMsg = document.createElement('div');
+        iaMsg.classList.add('message','ia');
+
+        // Generar respuesta
+        let response = randomResponse();
+
+        // Simular envío de foto o video
+        if (text.toLowerCase().includes('foto')) {
+            response = '';
+            const img = document.createElement('img');
+            img.src = 'https://via.placeholder.com/300x200.png?text=Foto+Sensual';
+            img.classList.add('media');
+            iaMsg.appendChild(img);
+        } else if (text.toLowerCase().includes('video')) {
+            response = '';
+            const video = document.createElement('video');
+            video.src = 'https://www.w3schools.com/html/mov_bbb.mp4';
+            video.controls = true;
+            video.classList.add('media');
+            iaMsg.appendChild(video);
+        } else {
+            iaMsg.textContent = response;
+        }
+
+        messages.appendChild(iaMsg);
+        messages.scrollTop = messages.scrollHeight;
+    }, 1500); // Tiempo de “escribiendo”
 }
-
-sendBtn.addEventListener('click', sendMessage);
-userInput.addEventListener('keypress', e => {
-    if (e.key === 'Enter') sendMessage();
-});
-```
-
 </script>
+
 </body>
 </html>
