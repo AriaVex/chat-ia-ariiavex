@@ -4,159 +4,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chat IA Sensual</title>
+<title>Chat IA AriiAvex</title>
 <style>
     body {
         margin: 0;
         font-family: 'Arial', sans-serif;
-        background: url('https://onlyfans.com/ariiavex') no-repeat center center fixed;
+        background-image: url('https://Ariavex.github.io/chat-ia-ariiavex/images/imagesfondo.jpg');
         background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         color: #fff;
     }
     .chat-container {
-        width: 400px;
-        max-width: 90%;
+        max-width: 500px;
         margin: 50px auto;
-        background: rgba(0,0,0,0.6);
-        border-radius: 15px;
+        background: rgba(0,0,0,0.7);
         padding: 20px;
+        border-radius: 15px;
         box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
     }
-    #messages {
-        height: 300px;
+    .messages {
+        height: 400px;
         overflow-y: auto;
-        border: 1px solid #fff;
         padding: 10px;
+        border: 1px solid #ff00ff;
         border-radius: 10px;
-        background: rgba(0,0,0,0.4);
+        background: rgba(0,0,0,0.5);
     }
     .message {
         margin: 10px 0;
-        padding: 8px;
-        border-radius: 10px;
+        padding: 8px 12px;
+        border-radius: 15px;
     }
     .user {
-        background: #ff00ff;
+        background-color: #ff00ff;
         color: #fff;
         text-align: right;
     }
     .ia {
-        background: #00ffff;
+        background-color: #00ffff;
         color: #000;
         text-align: left;
     }
-    input, button {
+    input[type=text] {
+        width: calc(100% - 90px);
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 15px;
         border: none;
-        margin-top: 10px;
-        width: calc(100% - 22px);
-        font-size: 16px;
+        margin-right: 10px;
         outline: none;
     }
     button {
+        padding: 10px 15px;
+        border-radius: 15px;
+        border: none;
         background: linear-gradient(45deg, #ff00ff, #00ffff);
         color: #fff;
         cursor: pointer;
-        transition: 0.3s;
+        font-weight: bold;
     }
     button:hover {
-        box-shadow: 0 0 10px #ff00ff, 0 0 10px #00ffff;
-    }
-    .ia-typing {
-        font-style: italic;
-        opacity: 0.7;
-    }
-    .media {
-        margin-top: 10px;
-        max-width: 100%;
-        border-radius: 10px;
+        box-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
     }
 </style>
 </head>
 <body>
 <div class="chat-container">
-    <h2>Chat con AriaVex</h2>
-    <div id="messages"></div>
-    <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí...">
-    <button onclick="sendMessage()">Enviar</button>
+    <h2 style="text-align:center; color:#ff00ff;">Chat AriiAvex IA</h2>
+    <div class="messages" id="messages"></div>
+    <div style="margin-top:10px;">
+        <input type="text" id="userInput" placeholder="Escribe algo...">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
 </div>
 
 <script>
-const messages = document.getElementById('messages');
-const userInput = document.getElementById('userInput');
+    const messagesDiv = document.getElementById('messages');
 
-// Simulación de 6000 respuestas predefinidas (aquí resumido, expandir según necesites)
-const iaResponses = [
-    "Hola guapo 😘, ¿qué tal estás?",
-    "Me encanta que me hables así 💖",
-    "¿Quieres ver una foto especial? 😏",
-    "Eres muy travieso 😈",
-    "Cuéntame tus fantasías...",
-    "Mmm... eso suena muy bien 😘",
-    "Estoy lista para jugar contigo 😏",
-    "Eres irresistible 💕",
-    "Me encanta hablar contigo 😍",
-    "Dime algo atrevido 😈"
-    // Añadir más hasta 6000
-];
+    const respuestas = [
+        { keywords: ["hola","hey","buenas"], response: "Hola guapo 😘, ¿qué tal estás? ¿Qué te apetece hacer hoy?" },
+        { keywords: ["como estas","que tal"], response: "Estoy fantástica 😏, ¿y tú? Cuéntame algo travieso..." },
+        { keywords: ["quiero ver"], response: "Mmm... eso suena interesante 😏, dime más detalles..." },
+        { keywords: ["adios","hasta luego"], response: "Hasta luego guapo 😘, espero que volvamos a hablar pronto 💖." },
+        { keywords: ["default"], response: "Wow 😏, cuéntame más sobre eso..." }
+    ];
 
-function randomResponse() {
-    const index = Math.floor(Math.random() * iaResponses.length);
-    return iaResponses[index];
-}
-
-function sendMessage() {
-    const text = userInput.value.trim();
-    if (!text) return;
-
-    // Mensaje del usuario
-    const userMsg = document.createElement('div');
-    userMsg.classList.add('message','user');
-    userMsg.textContent = text;
-    messages.appendChild(userMsg);
-    messages.scrollTop = messages.scrollHeight;
-    userInput.value = '';
-
-    // Mensaje de "IA escribiendo..."
-    const iaTyping = document.createElement('div');
-    iaTyping.classList.add('message','ia','ia-typing');
-    iaTyping.textContent = 'AriaVex está escribiendo...';
-    messages.appendChild(iaTyping);
-    messages.scrollTop = messages.scrollHeight;
-
-    // Respuesta de la IA simulada
-    setTimeout(() => {
-        messages.removeChild(iaTyping);
-
-        const iaMsg = document.createElement('div');
-        iaMsg.classList.add('message','ia');
-
-        // Generar respuesta
-        let response = randomResponse();
-
-        // Simular envío de foto o video
-        if (text.toLowerCase().includes('foto')) {
-            response = '';
-            const img = document.createElement('img');
-            img.src = 'https://via.placeholder.com/300x200.png?text=Foto+Sensual';
-            img.classList.add('media');
-            iaMsg.appendChild(img);
-        } else if (text.toLowerCase().includes('video')) {
-            response = '';
-            const video = document.createElement('video');
-            video.src = 'https://www.w3schools.com/html/mov_bbb.mp4';
-            video.controls = true;
-            video.classList.add('media');
-            iaMsg.appendChild(video);
-        } else {
-            iaMsg.textContent = response;
+    function getResponse(input) {
+        input = input.toLowerCase();
+        for (let i = 0; i < respuestas.length; i++) {
+            const kw = respuestas[i].keywords;
+            for (let j = 0; j < kw.length; j++) {
+                if (input.includes(kw[j])) return respuestas[i].response;
+            }
         }
+        return respuestas.find(r => r.keywords.includes("default")).response;
+    }
 
-        messages.appendChild(iaMsg);
-        messages.scrollTop = messages.scrollHeight;
-    }, 1500); // Tiempo de “escribiendo”
-}
+    function sendMessage() {
+        const input = document.getElementById('userInput').value;
+        if(!input) return;
+        const userMsgDiv = document.createElement('div');
+        userMsgDiv.className = 'message user';
+        userMsgDiv.innerText = input;
+        messagesDiv.appendChild(userMsgDiv);
+
+        const iaMsgDiv = document.createElement('div');
+        iaMsgDiv.className = 'message ia';
+        iaMsgDiv.innerText = getResponse(input);
+        messagesDiv.appendChild(iaMsgDiv);
+
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        document.getElementById('userInput').value = '';
+    }
 </script>
 
 </body>
