@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Sensual - Chat & Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+```
+    body {
+        height: 100vh;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        color: #fff;
+        background: #0f0c29;
+        background: radial-gradient(circle at 50% 50%, #ff0099, #493240, #0f0c29);
+        animation: backgroundPulse 15s infinite alternate;
+    }
+
+    @keyframes backgroundPulse {
+        0% { background: radial-gradient(circle at 50% 50%, #ff0099, #493240, #0f0c29); }
+        50% { background: radial-gradient(circle at 50% 50%, #ff66cc, #240046, #0f0c29); }
+        100% { background: radial-gradient(circle at 50% 50%, #ff3399, #493240, #0f0c29); }
+    }
+
+    header {
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        background: rgba(0,0,0,0.5);
+        box-shadow: 0 0 30px #ff33aa, 0 0 50px #ff00ff;
+    }
+
+    header a {
+        text-decoration: none;
+        color: #ff66cc;
+        font-size: 1.5em;
+        font-weight: 600;
+        text-shadow: 0 0 10px #ff66cc, 0 0 20px #ff33aa;
+    }
+
+    .chat-container {
+        margin-top: 30px;
+        width: 90%;
+        max-width: 600px;
+        background: rgba(20,20,20,0.85);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 0 30px #ff33aa, 0 0 50px #ff00ff;
+        backdrop-filter: blur(5px);
+    }
+
+    .messages {
+        height: 320px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+        padding: 15px;
+        border: 2px solid #ff66cc;
+        border-radius: 15px;
+        box-shadow: 0 0 15px #ff33aa;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .message { margin-bottom: 12px; }
+    .user { color: #66ccff; }
+    .ia { color: #ff66cc; }
+
+    .input-container { display: flex; gap: 12px; }
+    input {
+        flex: 1;
+        padding: 12px;
+        border-radius: 15px;
+        border: none;
+        outline: none;
+        background: #333;
+        color: #fff;
+    }
+
+    button {
+        padding: 12px 25px;
+        border-radius: 15px;
+        border: none;
+        background: #ff66cc;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 0 15px #ff33aa, 0 0 30px #ff00ff;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+    }
+
+    button:hover {
+        box-shadow: 0 0 25px #ff66cc, 0 0 50px #ff33aa, 0 0 70px #ff00ff;
+        transform: scale(1.05);
+    }
+
+    .tokens {
+        margin-top: 12px;
+        font-weight: 600;
+        color: #ff66cc;
+        text-align: right;
+    }
+
+    .gallery {
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+    }
+
+    .gallery img, .gallery video {
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 0 15px #ff33aa, 0 0 25px #ff00ff;
+    }
+
+    footer {
+        margin-top: auto;
+        padding: 25px;
+        text-align: center;
+        color: #ff66cc;
+        font-size: 0.9em;
+        text-shadow: 0 0 10px #ff66cc;
+    }
+</style>
+```
+
+</head>
+<body>
+
+```
+<header>
+    <a href="https://onlyfans.com/ariiavex" target="_blank">🌸 Mi OnlyFans 🌸</a>
+</header>
+
+<div class="chat-container">
+    <div class="messages" id="messages">
+        <div class="message ia">IA: ¡Hola! Pide una imagen o video y lo mostraré aquí 😉</div>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+    <div class="tokens" id="tokens">Tokens: 10</div>
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+<footer>🌸 Solo contenido legal y seguro 🌸</footer>
+
+<script>
+    let tokens = 10;
+    const messagesDiv = document.getElementById('messages');
+    const galleryDiv = document.getElementById('gallery');
+
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const userText = input.value.trim();
+        if (!userText) return;
+
+        if (tokens <= 0) {
+            alert("No tienes tokens suficientes 😢");
+            return;
+        }
+
+        const userMsg = document.createElement('div');
+        userMsg.classList.add('message', 'user');
+        userMsg.textContent = "Tú: " + userText;
+        messagesDiv.appendChild(userMsg);
+
+        input.value = '';
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        tokens--;
+        document.getElementById('tokens').textContent = `Tokens: ${tokens}`;
+
+        setTimeout(() => {
+            const iaMsg = document.createElement('div');
+            iaMsg.classList.add('message', 'ia');
+            iaMsg.textContent = "IA: Aquí tienes algo que pediste 😘";
+            messagesDiv.appendChild(iaMsg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            const mediaType = Math.random() > 0.5 ? 'img' : 'video';
+            if (mediaType === 'img') {
+                const img = document.createElement('img');
+                img.src = "https://picsum.photos/320/200?random=" + Math.floor(Math.random()*100);
+                galleryDiv.appendChild(img);
+            } else {
+                const video = document.createElement('video');
+                video.src = "https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4";
+                video.controls = true;
+                galleryDiv.appendChild(video);
+            }
+        }, 1000);
+    }
+</script>
+```
+
+</body>
+</html>
